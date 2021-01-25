@@ -14,6 +14,7 @@ class CreatePostsTable extends Migration
     public function up()
     {
         Schema::create('posts', function (Blueprint $table) {
+            //definisco la tipologia di dati che la mia tabella dovrà memorizzare
             $table->id();
             $table->string('title', 30);
             $table->string('description');

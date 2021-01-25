@@ -1,5 +1,5 @@
 <?php
-
+//dati utilizzati nel seeder 
 return[
         [
         'title'=>'Titolo1',
