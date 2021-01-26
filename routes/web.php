@@ -19,6 +19,9 @@ Route::get('/', 'HomeController@index')->name('index');
 //rotta generata con l'installazione di laravel/ui che gestisce le logiche di registrazione e login
 Auth::routes();
 
+// Auth::routes(['register' => false]);
+//Nel caso volessi vietare la registrazione agli utenti, chiudo la rotta con il seguente comando ['register' => false]
+
 //(es. http://localhost:8000/admin) questa rotta verrà puntata da app/Providers/RouteServiceProvider.php non appena verrà effettuato il login
 //middleware('auth')=controllo di autenticazione(verifica che l'utente sia loggato per poter accedere alla seguente rotta)
 //namespace('Admin')=cartella in cui si trova la rotta
@@ -28,4 +31,5 @@ Route::middleware('auth')->namespace('Admin')->prefix('admin')->name('admin.')->
 
     Route::get('/', 'HomeController@index')->name('index');
     //sarà collegata con in controller HomeController presente nella cartella Admin(Controllers/Admin/HomeController.php) , dove vado a specificare di eseguire la public function index()
+    Route::resource('/posts', 'PostController');
 });

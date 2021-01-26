@@ -3,6 +3,11 @@
 @section('content')
 <div class="container">
     <h1>ADMIN</h1>
+    <ul>
+        <li>
+            <a href="{{route('admin.posts.index')}}">Posts</a>
+        </li>
+    </ul>
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
