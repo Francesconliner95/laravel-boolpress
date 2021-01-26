@@ -16,9 +16,9 @@ class CreatePostsTable extends Migration
         Schema::create('posts', function (Blueprint $table) {
             //definisco la tipologia di dati che la mia tabella dovrà memorizzare
             $table->id();
-            $table->string('title', 30);
-            $table->string('description');
-            $table->string('date', 15);
+            $table->string('title');
+            $table->text('description');
+            $table->string('slug')->unique();//creiamo una colonna 'slug' nella tabella che conterrà parzialmente(la parte finale) il link per la pagina del post selezionato
             $table->timestamps();
         });
     }
