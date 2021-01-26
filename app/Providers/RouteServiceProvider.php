@@ -21,7 +21,9 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    public const HOME = '/home';
+
+    public const HOME = '/admin';
+    //qui vado a specificare che non appena effettuato il login sarò reindirizzato alla rotta /admin  (vedi in routes/web.php)
 
     /**
      * Define your route model bindings, pattern filters, etc.
