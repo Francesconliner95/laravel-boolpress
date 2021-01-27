@@ -48,9 +48,14 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Post $post)
     {
-        //
+        //cerco(find) nel database la riga con l'id che mi sono passato e memorizzo tutti i valori nella variabile record.
+        $data = [
+            'post'=>$post
+        ];
+
+        return view('admin.posts.show', $data);
     }
 
     /**

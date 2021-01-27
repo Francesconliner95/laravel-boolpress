@@ -1,3 +1,5 @@
+@extends('admin.posts.index')
+
 @section('content')
     <ul>
         <li>

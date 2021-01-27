@@ -5,6 +5,9 @@
     <h1>ADMIN</h1>
     <ul>
         <li>
+            <a href="{{route('admin.index')}}">Dashboard</a>
+        </li>
+        <li>
             <a href="{{route('admin.posts.index')}}">Posts</a>
         </li>
     </ul>
