@@ -16,6 +16,10 @@ use Illuminate\Support\Facades\Route;
 //(es. http://localhost:8000/) All'avvio parto con la seguente rotta, collegata con in controller HomeController (Controllers/HomeController.php) , dove vado a specificare di eseguire la public function index()
 Route::get('/', 'HomeController@index')->name('index');
 
+Route::get('/posts', 'PostController@index')->name('guest.posts.index');
+
+Route::get('/posts/{param}', 'PostController@show')->name('guest.posts.show');
+
 //rotta generata con l'installazione di laravel/ui che gestisce le logiche di registrazione e login
 Auth::routes();
 
