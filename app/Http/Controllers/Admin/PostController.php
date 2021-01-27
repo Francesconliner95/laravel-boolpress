@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Post;
+use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
@@ -28,7 +29,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        //aggiungiamo la view alla funzione create, quindi andiamo anche a creare il nuovo file create.blade.php in records
+        return view('admin.posts.create');
     }
 
     /**
@@ -45,6 +47,26 @@ class PostController extends Controller
         //creiamo una nuova classe Post(che prende dal Model Post.php che comunica con il nostro Database)
         $new_post = new Post();
 
+        ######
+
+        $slug = Str::slug($data['title']); //con questo comando andiamo a generare uno slug(link), che otteniamo concatenando le stringhe del titolo.
+
+        $slug_base = $slug; //memorizziamo lo slug di partenza cosi quando andremo a modificare $slug avremo un backup
+
+        $post_presente = Post::where('slug', $slug)->first(); //controllo attraverso il model Post che nella mia tebella posts non esista gia' uno slug uguale ( confronto where('slug', $slug) ), nel caso ne trova più di uno attraverso il comando first() specifico di prendere solo il primo.
+
+        $contatore=1;
+
+        //se $post_presente contiene dati entro nel ciclo, in caso contrario (NULL) lo salto.
+        while($post_presente){
+            //devo generare un nuovo slug valido che otteremmo concatenando allo  $slug_base un valore numerico che si incrementerà in caso già esistente
+            $slug = $slug_base . '-' . $contatore;
+            $contatore++;
+            $post_presente = Post::where('slug', $slug)->first(); //effettuo novamente la verifica, nel caso trovo nuovamente uno slug ugale rieseguo il ciclo altrimenti vado avanti
+        }
+
+        $new_post->slug = $slug;//dopo essermi accertato che il mio slug non esisteva in precedenza posso assegnarelo come valore
+
         //METODO 2
         //passiamo al database direttamente tutti i parametri grazie al comando fill, pero dobbiamo ricordarci di andare a specificare all'interno del nostro Model Post.php solo i parametri che ci interessano, perchè insieme passa anche il token @csrf che non ci serve
         $new_post->fill($data);
@@ -53,7 +75,7 @@ class PostController extends Controller
         $new_post->save();
 
         //quando ha finito di salvare, automaticamente reindirizza la pagina in post.index. Reindirizziamo la pagina non appena vengono memorizzati i dati perchè in caso contrario  restando sulla stessa, basterebbe aggiornare la pagina per ricaricare gli stessi dati nel database occupando la riga successiva e cosi via
-        return redirect()->route('admin.post.index');
+        return redirect()->route('admin.posts.index');
     }
 
     /**

@@ -5,6 +5,9 @@
     <h1>ADMIN</h1>
     <h2>Posts</h2>
     <div class="row justify-content-center">
+        <div>
+        <a href="{{ route('admin.posts.create')}}">Aggiungi Nuovo Post</a>
+        </div>
         <table>
             <thead>
                 <th>Titolo</th>
