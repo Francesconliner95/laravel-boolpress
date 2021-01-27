@@ -93,9 +93,16 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Post $post)
     {
-        //
+        //la funzione update si passa di default il parametro $request che conterrà i dati da noi inseriti nel form grazie al fatto che abbiamo specificato il @method('POST'), $request->all() con questo comando andiamo a memorizzare tutti i dati inseriti all'interno della variabile $data
+        $data=$request->all();
+
+        //dopo di che attraverso il comando update andiamo a dire di sostituire e salvare direttamente i nuovi dati ($data) all'interno della riga selezionata $post (ovvero la classe Post corrente)
+        $post->update($data);
+
+        //successivamente reindirizzo la pagina nella sezione show del record modificato ['post' => $post->id], in modo da poterne visualizzare le modifiche salvate
+        return redirect()->route('admin.posts.show', ['post' => $post->id]);
     }
 
     /**
@@ -104,8 +111,12 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Post $post)
     {
-        //
+        //attraverso la funzione delete mi va ad eliminare direttamente la riga nel database
+        $post->delete();
+
+        //successivamente reindirizzo la pagina nella sezione index, in modo da poter visualizzare le lista dei record aggiornata, ovvero senza la riga corrente
+        return redirect()->route('admin.posts.index');
     }
 }

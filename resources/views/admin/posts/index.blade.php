@@ -22,7 +22,15 @@
                     <a href="{{ route('admin.posts.edit', ['post'=> $post->id])}}">
                         Modifica</a>
                 </td>
-
+                <td>
+                    <form method="post" action="{{ route('admin.posts.destroy', ['post'=> $post->id])}}" >
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" name="button">
+                            Cancella
+                        </button>
+                    </form>
+                </td>
             </tbody>
             @endforeach
         </table>
