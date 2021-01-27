@@ -18,6 +18,10 @@
                     <a href="{{ route('admin.posts.show', ['post'=> $post->id])}}">
                         Maggiori Dettagli</a>
                 </td>
+                <td>
+                    <a href="{{ route('admin.posts.edit', ['post'=> $post->id])}}">
+                        Modifica</a>
+                </td>
 
             </tbody>
             @endforeach

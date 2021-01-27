@@ -39,7 +39,21 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //la funzione store si passa di default il parametro $request che conterrà i dati da noi inseriti nel form, $request->all() con questo comando andiamo a memorizzare tutti i dati inseriti all'interno della variabile $data
+        $data = $request->all();
+
+        //creiamo una nuova classe Post(che prende dal Model Post.php che comunica con il nostro Database)
+        $new_post = new Post();
+
+        //METODO 2
+        //passiamo al database direttamente tutti i parametri grazie al comando fill, pero dobbiamo ricordarci di andare a specificare all'interno del nostro Model Post.php solo i parametri che ci interessano, perchè insieme passa anche il token @csrf che non ci serve
+        $new_post->fill($data);
+
+        //ora possiamo memorizzare i nostri dati sul database
+        $new_post->save();
+
+        //quando ha finito di salvare, automaticamente reindirizza la pagina in post.index. Reindirizziamo la pagina non appena vengono memorizzati i dati perchè in caso contrario  restando sulla stessa, basterebbe aggiornare la pagina per ricaricare gli stessi dati nel database occupando la riga successiva e cosi via
+        return redirect()->route('admin.post.index');
     }
 
     /**
@@ -50,7 +64,6 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //cerco(find) nel database la riga con l'id che mi sono passato e memorizzo tutti i valori nella variabile record.
         $data = [
             'post'=>$post
         ];
@@ -64,9 +77,13 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        //
+        $data = [
+            'post'=>$post
+        ];
+
+        return view('admin.posts.edit', $data);
     }
 
     /**
