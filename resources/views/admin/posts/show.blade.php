@@ -7,6 +7,7 @@
     <div class="row justify-content-center">
         <p>{{$post->title}}</p>
         <p>{{$post->description}}</p>
+        <p>Categoria: {{$post->category ? $post->category->name : '-'}}</p>
     </div>
 </div>
 @endsection

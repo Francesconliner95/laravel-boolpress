@@ -20,6 +20,15 @@
         <textarea name="description" rows="8" cols="80">{{$post->description}}</textarea>
     </div>
     <div>
+        <label>Descrizione</label>
+        <select class="" name="category_id">
+            <option value="">-- seleziona categoria --</option>
+            @foreach ($categories as $category)
+                <option value="{{$category->id}}" {{$category->id==$post->category_id ? 'selected=selected' : ''}}>{{$category->name}}</option>
+            @endforeach
+        </select>
+    </div>
+    <div>
         {{-- cambiato da type="button" a type="submit" --}}
         <button type="submit" name="button">
             Salva

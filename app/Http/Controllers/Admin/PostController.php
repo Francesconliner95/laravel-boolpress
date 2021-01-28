@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Post;
 use Illuminate\Support\Str;
+use App\Category;
 
 class PostController extends Controller
 {
@@ -29,8 +30,11 @@ class PostController extends Controller
      */
     public function create()
     {
+        $data=[
+            'categories' => Category::all()
+        ];
         //aggiungiamo la view alla funzione create, quindi andiamo anche a creare il nuovo file create.blade.php in records
-        return view('admin.posts.create');
+        return view('admin.posts.create', $data);
     }
 
     /**
@@ -87,7 +91,8 @@ class PostController extends Controller
     public function show(Post $post)
     {
         $data = [
-            'post'=>$post
+            'post'=>$post,
+
         ];
 
         return view('admin.posts.show', $data);
@@ -102,7 +107,9 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         $data = [
-            'post'=>$post
+            'post'=>$post,
+            'categories' => Category::all()
+
         ];
 
         return view('admin.posts.edit', $data);

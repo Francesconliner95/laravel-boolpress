@@ -3,6 +3,8 @@
 @section('content')
 <div class="container">
     <h1>GUEST</h1>
+    <a href="{{route('guest.posts.index')}}">Posts</a>
+
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
