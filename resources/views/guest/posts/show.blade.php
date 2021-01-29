@@ -4,7 +4,7 @@
     <div class="container">
         <h1>GUEST</h1>
         <h2>Posts</h2>
-        <div class="row justify-content-center">
+        <div>
             <p>{{$post->title}}</p>
             <p>{{$post->description}}</p>
             {{--

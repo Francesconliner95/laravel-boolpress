@@ -4,7 +4,7 @@
 <div class="container">
     <h1>ADMIN</h1>
     <h2>Posts</h2>
-    <div class="row justify-content-center">
+    <div>
         <p>{{$post->title}}</p>
         <p>{{$post->description}}</p>
         {{--
@@ -13,6 +13,13 @@
         name = vogliamo prendere solo il nome di quella categoria (nome generato in CategoriesTableSeader.php)--}}
         <p>Categoria: {{$post->category ? $post->category->name : '-'}}</p>
         {{-- nel ternario verifichiamo che l post abbia una categoria associata, se si la stampiamo altrimenti no '-' --}}
+        <p>Tags:
+            @forelse ($post->tags as $tag)
+                {{$tag->name}}{{!$loop->last?',':''}}
+            @empty
+                -
+            @endforelse
+        </p>
     </div>
 </div>
 @endsection

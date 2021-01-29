@@ -20,17 +20,26 @@
         <textarea name="description" rows="8" cols="80">{{$post->description}}</textarea>
     </div>
     <div>
-        <label>Descrizione</label>
+        <label>Seleziona categoria:</label>
         <select class="" name="category_id">
             <option value="">-- seleziona categoria --</option>
             @foreach ($categories as $category)
                 {{-- se il valore della categoria corrente ($category->id) è uguale alla categoria del post($post->category_id) allora lo seleziono(selected=selected) --}}
                 <option value="{{$category->id}}" {{$category->id==$post->category_id ? 'selected=selected' : ''}}>
-                    
+
                     {{$category->name}}
 
                 </option>
 
+            @endforeach
+        </select>
+    </div>
+    <div>
+        <label>Seleziona i tag:</label>
+            @foreach ($tags as $tag)
+                <input type="checkbox" name="tags[]" value="{{$tag->id}}"
+                {{$post->tags->contains($tag)?'checked=checked':''}}>
+                <label for="">{{$tag->name}}</label>
             @endforeach
         </select>
     </div>

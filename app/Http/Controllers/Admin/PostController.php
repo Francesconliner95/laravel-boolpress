@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Post;
 use Illuminate\Support\Str;
 use App\Category;
+use App\Tag;
 
 class PostController extends Controller
 {
@@ -31,7 +32,8 @@ class PostController extends Controller
     public function create()
     {
         $data=[
-            'categories' => Category::all()
+            'categories' => Category::all(),
+            'tags' => Tag::all()
         ];
         //aggiungiamo la view alla funzione create, quindi andiamo anche a creare il nuovo file create.blade.php in records
         return view('admin.posts.create', $data);
@@ -78,6 +80,8 @@ class PostController extends Controller
         //ora possiamo memorizzare i nostri dati sul database
         $new_post->save();
 
+        $new_post->tags()->sync($data['tags']);
+
         //quando ha finito di salvare, automaticamente reindirizza la pagina in post.index. Reindirizziamo la pagina non appena vengono memorizzati i dati perchè in caso contrario  restando sulla stessa, basterebbe aggiornare la pagina per ricaricare gli stessi dati nel database occupando la riga successiva e cosi via
         return redirect()->route('admin.posts.index');
     }
@@ -108,7 +112,8 @@ class PostController extends Controller
     {
         $data = [
             'post'=>$post,
-            'categories' => Category::all()
+            'categories' => Category::all(),
+            'tags' => Tag::all()
         ];
 
         return view('admin.posts.edit', $data);
@@ -126,8 +131,31 @@ class PostController extends Controller
         //la funzione update si passa di default il parametro $request che conterrà i dati da noi inseriti nel form grazie al fatto che abbiamo specificato il @method('POST'), $request->all() con questo comando andiamo a memorizzare tutti i dati inseriti all'interno della variabile $data
         $data=$request->all();
 
+        if($data['title'] != $post->title){
+
+            $slug = Str::slug($data['title']);
+
+            $slug_base = $slug;
+
+            $post_presente = Post::where('slug', $slug)->first();
+
+            $contatore=1;
+
+            while($post_presente){
+
+                $slug = $slug_base . '-' . $contatore;
+                $contatore++;
+                $post_presente = Post::where('slug', $slug)->first();
+            }
+
+            $data['slug'] = $slug;
+
+        }
+
         //dopo di che attraverso il comando update andiamo a dire di sostituire e salvare direttamente i nuovi dati ($data) all'interno della riga selezionata $post (ovvero la classe Post corrente)
         $post->update($data);
+
+        $post->tags()->sync($data['tags']);
 
         //successivamente reindirizzo la pagina nella sezione show del record modificato ['post' => $post->id], in modo da poterne visualizzare le modifiche salvate
         return redirect()->route('admin.posts.show', ['post' => $post->id]);
@@ -141,6 +169,8 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        $post->tags()->sync([]);
+
         //attraverso la funzione delete mi va ad eliminare direttamente la riga nel database
         $post->delete();
 

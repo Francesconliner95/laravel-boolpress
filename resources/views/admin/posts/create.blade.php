@@ -19,11 +19,19 @@
         <textarea name="description" rows="8" cols="80"></textarea>
     </div>
     <div>
-        <label>Descrizione</label>
+        <label>Categorie</label>
         <select class="" name="category_id">
             <option value="">-- seleziona categoria --</option>
             @foreach ($categories as $category)
                 <option value="{{$category->id}}">{{$category->name}}</option>
+            @endforeach
+        </select>
+    </div>
+    <div>
+        <label>Seleziona i tag:</label>
+            @foreach ($tags as $tag)
+                <input type="checkbox" name="tags[]" value="{{$tag->id}}">
+                <label for="">{{$tag->name}}</label>
             @endforeach
         </select>
     </div>
