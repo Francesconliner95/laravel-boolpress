@@ -17,4 +17,9 @@ class Post extends Model
         //belongsTo('App\Category'), significa che Post può utilizzare (appartiene ad) una sola categoria.
         return $this->belongsTo('App\Category');
     }
+
+    public function tags(){
+        //belongsToMany('App\Tag'), significa che Post può utilizzare (appartiene a) più tag.
+        return $this->belongsToMany('App\Tag');
+    }
 }

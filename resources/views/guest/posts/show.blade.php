@@ -23,6 +23,13 @@
                     -
                 @endif
             </p>
+            <p>Tags:
+                @forelse ($post->tags as $tag)
+                    {{$tag->name}}{{!$loop->last?',':''}}
+                @empty
+                    -
+                @endforelse
+            </p>
         </div>
     </div>
 @endsection
