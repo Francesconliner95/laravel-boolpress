@@ -109,7 +109,6 @@ class PostController extends Controller
         $data = [
             'post'=>$post,
             'categories' => Category::all()
-
         ];
 
         return view('admin.posts.edit', $data);

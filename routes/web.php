@@ -20,6 +20,8 @@ Route::get('/posts', 'PostController@index')->name('guest.posts.index');
 
 Route::get('/posts/{param}', 'PostController@show')->name('guest.posts.show');
 
+Route::get('/categories/{category}', 'CategoryController@show')->name('categories.show');
+
 //rotta generata con l'installazione di laravel/ui che gestisce le logiche di registrazione e login
 Auth::routes();
 

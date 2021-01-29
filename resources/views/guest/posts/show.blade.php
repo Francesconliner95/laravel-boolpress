@@ -11,8 +11,18 @@
             $post = vogliamo prendere un dato dalla tabella post
             category = funzione dichiarata nel model Post.php  da  utilizzare senza parentesi  category(), laravel in automatico capisce che sono collegate in quanto l'abbiamo specificato nella migration ponte (AddForeignCategoryPostsTable).
             name = vogliamo prendere solo il nome di quella categoria (nome generato in CategoriesTableSeader.php)--}}
-            <p>Categoria: {{$post->category ? $post->category->name : '-'}}</p>
-            {{-- nel ternario verifichiamo che l post abbia una categoria associata, se si la stampiamo altrimenti no '-' --}}
+
+            {{-- verifichiamo che il post abbia una categoria associata, se si la stampiamo il nome della categoria altrimenti '-' --}}
+            <p>Categoria:
+                @if ($post->category)
+                    {{-- la categoria sarà cliccabile e la facciamo puntare alla rotta 'categories.show' che ci mostrerà tutti i post con la categoria selezionata --}}
+                    <a href="{{ route('categories.show', ['category'=>$post->category->slug])}}">
+                        {{$post->category->name}}
+                    </a>
+                @else
+                    -
+                @endif
+            </p>
         </div>
     </div>
 @endsection

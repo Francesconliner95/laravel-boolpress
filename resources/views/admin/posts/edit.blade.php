@@ -24,7 +24,13 @@
         <select class="" name="category_id">
             <option value="">-- seleziona categoria --</option>
             @foreach ($categories as $category)
-                <option value="{{$category->id}}" {{$category->id==$post->category_id ? 'selected=selected' : ''}}>{{$category->name}}</option>
+                {{-- se il valore della categoria corrente ($category->id) è uguale alla categoria del post($post->category_id) allora lo seleziono(selected=selected) --}}
+                <option value="{{$category->id}}" {{$category->id==$post->category_id ? 'selected=selected' : ''}}>
+                    
+                    {{$category->name}}
+
+                </option>
+
             @endforeach
         </select>
     </div>
