@@ -2,6 +2,7 @@
 
 @section('content')
 <div class="container">
+    @include('admin/navbar')
     <h1>Modifica</h1>
 
 {{-- creiamo un form inizialmente inseriamo il metodo post('in quanto il from accetta solo i metodi post e get') e poi andremo a specificare attraveso @method('PUT') il metodo che effettivamente utilizzeremo ovvero PUT, successivamente con action andiamo a specificare a quale rotta si deve collegare e ci passiamo il parametro id dell'oggetto corrente che stiamo andando a modificare, quando premo il button(dove abbiamo specificato il type="submit") verrà eseguito il form --}}
@@ -30,6 +31,7 @@
     <div>
         <label>Seleziona i tag:</label>
             @foreach ($tags as $tag)
+                {{-- quando premo il button passo al mio database un array di tag (name="tags[]") --}}
                 <input type="checkbox" name="tags[]" value="{{$tag->id}}">
                 <label for="">{{$tag->name}}</label>
             @endforeach

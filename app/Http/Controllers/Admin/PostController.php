@@ -131,6 +131,7 @@ class PostController extends Controller
         //la funzione update si passa di default il parametro $request che conterrà i dati da noi inseriti nel form grazie al fatto che abbiamo specificato il @method('POST'), $request->all() con questo comando andiamo a memorizzare tutti i dati inseriti all'interno della variabile $data
         $data=$request->all();
 
+        //se il titolo da me aggiunto non esiste nella tabella
         if($data['title'] != $post->title){
 
             $slug = Str::slug($data['title']);
@@ -155,6 +156,7 @@ class PostController extends Controller
         //dopo di che attraverso il comando update andiamo a dire di sostituire e salvare direttamente i nuovi dati ($data) all'interno della riga selezionata $post (ovvero la classe Post corrente)
         $post->update($data);
 
+        //sync() automaticamente aggiunge o rimuove i tag dal relativo post, quindi sincronizza automaticamente i tag restituiti dalla view edit.blade.php ($data['tags']) aggiornando i tag per il post selezionato ($post->tags())
         $post->tags()->sync($data['tags']);
 
         //successivamente reindirizzo la pagina nella sezione show del record modificato ['post' => $post->id], in modo da poterne visualizzare le modifiche salvate
@@ -169,6 +171,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        //per rimuovere tutti i tag dal post($post->tags()) basta retituirgli un array vuoto (sync([]));
         $post->tags()->sync([]);
 
         //attraverso la funzione delete mi va ad eliminare direttamente la riga nel database

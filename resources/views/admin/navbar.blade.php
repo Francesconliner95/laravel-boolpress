@@ -1,9 +1,9 @@
-@extends('admin.posts.index')
-
-@section('content')
-    <ul>
-        <li>
-            <a href="{{route('admin.posts.index')}}">Posts</a>
-        </li>
-    </ul>
-@endsection
+<h1 class="d-inline-block">ADMIN</h1>
+<ul class="d-inline-block">
+    <li class="d-inline-block pr-3">
+        <a href="{{route('admin.index')}}">Dashboard</a>
+    </li>
+    <li class="d-inline-block pr-3 pl-3">
+        <a href="{{route('admin.posts.index')}}">Posts</a>
+    </li>
+</ul>

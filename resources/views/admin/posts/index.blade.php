@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <h1>ADMIN</h1>
+    @include('admin/navbar')
     <h2>Posts</h2>
     <div class="row justify-content-center">
         <div>

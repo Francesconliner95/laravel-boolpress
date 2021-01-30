@@ -25,6 +25,7 @@
             </p>
             <p>Tags:
                 @forelse ($post->tags as $tag)
+                    {{-- (!$loop->last?',':'') inserisce la virgola a tutti i tag tranne l'ultimo  --}}
                     {{$tag->name}}{{!$loop->last?',':''}}
                 @empty
                     -

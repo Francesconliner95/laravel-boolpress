@@ -19,13 +19,13 @@ class CreatePostTagTable extends Migration
             //creao la colonna 'post_id'
             $table->bigInteger('post_id')->unsigned();
 
-            //creao la dipendenza tra la colonna 'post_id' (tabella Tags) e la tabella Posts
+            //creao la dipendenza tra la colonna 'post_id' (tabella Post_Tag) e la tabella Posts
             $table->foreign('post_id')->references('id')->on('posts');
 
             //creao la colonna 'tag_id'
             $table->bigInteger('tag_id')->unsigned();
 
-            //creao la dipendenza tra la colonna 'tag_id' (tabella Posts) e la tabella Tags
+            //creao la dipendenza tra la colonna 'tag_id' (tabella Post_Tag) e la tabella Tags
             $table->foreign('tag_id')->references('id')->on('tags');
 
             //dichiaro entrambe le colonne come chiavi primarie
