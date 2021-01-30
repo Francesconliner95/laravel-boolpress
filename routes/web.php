@@ -38,4 +38,6 @@ Route::middleware('auth')->namespace('Admin')->prefix('admin')->name('admin.')->
     Route::get('/', 'HomeController@index')->name('index');
     //sarà collegata con in controller HomeController presente nella cartella Admin(Controllers/Admin/HomeController.php) , dove vado a specificare di eseguire la public function index()
     Route::resource('/posts', 'PostController');
+
+    Route::resource('/tags', 'TagController');
 });

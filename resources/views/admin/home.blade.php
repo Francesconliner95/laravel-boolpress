@@ -3,14 +3,6 @@
 @section('content')
 <div class="container">
     @include('admin/navbar')
-    {{-- <ul>
-        <li>
-            <a href="{{route('admin.index')}}">Dashboard</a>
-        </li>
-        <li>
-            <a href="{{route('admin.posts.index')}}">Posts</a>
-        </li>
-    </ul> --}}
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
