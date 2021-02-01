@@ -40,4 +40,10 @@ Route::middleware('auth')->namespace('Admin')->prefix('admin')->name('admin.')->
     Route::resource('/posts', 'PostController');
 
     Route::resource('/tags', 'TagController');
+
+    //rotta per visualizzare il profilo dell'utente loggato
+    Route::get('/profile', 'HomeController@profile')->name('profile');
+
+    //rotta per visualizzare il profilo dell'utente loggato
+    Route::post('/profile/generate-token', 'HomeController@generateToken')->name('generate_token');
 });
