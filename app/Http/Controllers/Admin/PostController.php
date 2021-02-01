@@ -55,7 +55,7 @@ class PostController extends Controller
             'tags'=> 'exists:tags,id'//controlla che esistano i seguenti 'tags'(ci restituisce un array) all'interno della tabella tags, colonna id
             //exists:categories,id o exists:tags,id utili in caso qualcuno prova a monomettere l'html
         ]);
-        
+
 
         //la funzione store si passa di default il parametro $request che conterrà i dati da noi inseriti nel form, $request->all() con questo comando andiamo a memorizzare tutti i dati inseriti all'interno della variabile $data
         $data = $request->all();
@@ -90,7 +90,14 @@ class PostController extends Controller
         //ora possiamo memorizzare i nostri dati sul database
         $new_post->save();
 
-        $new_post->tags()->sync($data['tags']);
+        // $new_post->tags()->sync($data['tags']);
+
+        //se la seguente chiave 'tags' è presente nell'array $data (quindi se abbiamo selezionato almeno un tag)
+        if(array_key_exists('tags', $data)){
+
+            //sync() automaticamente aggiunge o rimuove i tag dal relativo post, quindi sincronizza automaticamente i tag restituiti dalla view edit.blade.php ($data['tags']) aggiornando i tag per il post selezionato ($post->tags())
+            $new_post->tags()->sync($data['tags']);
+        }
 
         //quando ha finito di salvare, automaticamente reindirizza la pagina in post.index. Reindirizziamo la pagina non appena vengono memorizzati i dati perchè in caso contrario  restando sulla stessa, basterebbe aggiornare la pagina per ricaricare gli stessi dati nel database occupando la riga successiva e cosi via
         return redirect()->route('admin.posts.index');
@@ -138,6 +145,15 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
+        //andiamo a impostare i requisiti che i dati in input devono avere per essere accettati
+        $request->validate([
+            'title' => 'required|max:255', //titolo obbligatorio e max 255 char
+            'description' => 'required', //descrizione obbligatorio
+            'category_id' => 'nullable|exists:categories,id', //può essere NULL e controlla che esista il seguente id 'category_id' nella tabella categories, colonna id
+            'tags'=> 'exists:tags,id'//controlla che esistano i seguenti 'tags'(ci restituisce un array) all'interno della tabella tags, colonna id
+            //exists:categories,id o exists:tags,id utili in caso qualcuno prova a monomettere l'html
+        ]);
+
         //la funzione update si passa di default il parametro $request che conterrà i dati da noi inseriti nel form grazie al fatto che abbiamo specificato il @method('POST'), $request->all() con questo comando andiamo a memorizzare tutti i dati inseriti all'interno della variabile $data
         $data=$request->all();
 
@@ -166,8 +182,13 @@ class PostController extends Controller
         //dopo di che attraverso il comando update andiamo a dire di sostituire e salvare direttamente i nuovi dati ($data) all'interno della riga selezionata $post (ovvero la classe Post corrente)
         $post->update($data);
 
-        //sync() automaticamente aggiunge o rimuove i tag dal relativo post, quindi sincronizza automaticamente i tag restituiti dalla view edit.blade.php ($data['tags']) aggiornando i tag per il post selezionato ($post->tags())
-        $post->tags()->sync($data['tags']);
+
+        //se la seguente chiave 'tags' è presente nell'array $data (quindi se abbiamo selezionato almeno un tag)
+        if(array_key_exists('tags', $data)){
+
+            //sync() automaticamente aggiunge o rimuove i tag dal relativo post, quindi sincronizza automaticamente i tag restituiti dalla view edit.blade.php ($data['tags']) aggiornando i tag per il post selezionato ($post->tags())
+            $post->tags()->sync($data['tags']);
+        }
 
         //successivamente reindirizzo la pagina nella sezione show del record modificato ['post' => $post->id], in modo da poterne visualizzare le modifiche salvate
         return redirect()->route('admin.posts.show', ['post' => $post->id]);

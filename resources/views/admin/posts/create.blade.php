@@ -26,10 +26,20 @@
         <label>Titolo</label>
          {{-- impostiamo il value {{ old('title')}}, in quanto la funzione old() in caso di errore di input quando la pagina viene ricaricata mantiene il valore precedente cosi non devo reinserirlo --}}
         <input type="text" name="title" value="{{ old('title')}}">
+
+        {{-- visualizzo l'errore sotto l'input --}}
+        @error ('title')
+            <div class="alert alert-danger">{{$message}}</div>
+        @enderror
     </div>
     <div>
         <label>Descrizione</label>
         <textarea name="description" rows="8" cols="80">{{ old('descriprion')}}</textarea>
+
+        {{-- visualizzo l'errore sotto l'input --}}
+        @error ('description')
+            <div class="alert alert-danger">{{$message}}</div>
+        @enderror
     </div>
     <div>
         <label>Categorie</label>
@@ -40,6 +50,10 @@
                 {{-- {{ old('category_id') == $category->id ? 'selected=selected' : '' }}  se la category_id inserita in precedenza è uguale all'id ($category->id) ciclato allora la seleziono--}}
             @endforeach
         </select>
+        {{-- visualizzo l'errore sotto l'input --}}
+        @error ('category_id')
+            <div class="alert alert-danger">{{$message}}</div>
+        @enderror
     </div>
     <div>
         <label>Seleziona i tag:</label>
@@ -50,7 +64,10 @@
                 {{-- la funzione old('tags', []) come primo parametro si passa l'ultimo valore inserito nell'input , e come secondo parametro il valore nel caso in cui non è ancora stato inserito alcun valore quindi nel nostro caso un array vuoto [] --}}
                 <label for="">{{$tag->name}}</label>
             @endforeach
-        </select>
+            {{-- visualizzo l'errore sotto l'input --}}
+            @error ('tags')
+                <div class="alert alert-danger">{{$message}}</div>
+            @enderror
     </div>
     <div>
         {{-- cambiato da type="button" a type="submit" --}}
