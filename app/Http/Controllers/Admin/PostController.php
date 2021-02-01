@@ -47,6 +47,16 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        //andiamo a impostare i requisiti che i dati in input devono avere per essere accettati
+        $request->validate([
+            'title' => 'required|max:255', //titolo obbligatorio e max 255 char
+            'description' => 'required', //descrizione obbligatorio
+            'category_id' => 'nullable|exists:categories,id', //può essere NULL e controlla che esista il seguente id 'category_id' nella tabella categories, colonna id
+            'tags'=> 'exists:tags,id'//controlla che esistano i seguenti 'tags'(ci restituisce un array) all'interno della tabella tags, colonna id
+            //exists:categories,id o exists:tags,id utili in caso qualcuno prova a monomettere l'html
+        ]);
+        
+
         //la funzione store si passa di default il parametro $request che conterrà i dati da noi inseriti nel form, $request->all() con questo comando andiamo a memorizzare tutti i dati inseriti all'interno della variabile $data
         $data = $request->all();
 
